@@ -1,14 +1,50 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { projects } from '../data/projects';
+
+const websitePackages = [
+	{
+		slug: 'basic-website',
+		name: 'Basic Website',
+		summary: 'A focused online home for small businesses and personal projects.',
+		price: 'KSh 15,000',
+		delivery: '5–7 days',
+		features: ['Up to 5 pages', 'Responsive design', 'Contact form', 'Basic SEO setup', 'Social media integration', '1 month free support'],
+	},
+	{
+		slug: 'business-website',
+		name: 'Business Website',
+		summary: 'A polished, flexible site for established businesses and service providers.',
+		price: 'KSh 25,000',
+		delivery: '7–10 days',
+		popular: true,
+		features: ['Up to 10 pages', 'Professional design', 'Content management', 'Advanced SEO', 'Google Analytics', 'Email integration', '2 months free support'],
+	},
+	{
+		slug: 'ecommerce-platform',
+		name: 'E-commerce Platform',
+		summary: 'An online store with the tools to manage products, orders, and customers.',
+		price: 'KSh 45,000',
+		delivery: '14–21 days',
+		features: ['Product catalog and shopping cart', 'M-Pesa payment integration', 'Order management', 'Customer accounts', 'Inventory tracking', '3 months free support'],
+	},
+] as const;
+
+const addOnServices = [
+	{ slug: 'website-maintenance', name: 'Website maintenance', price: 'From KSh 3,000/month' },
+	{ slug: 'domain-hosting', name: 'Domain & hosting setup', price: 'KSh 5,000/year' },
+	{ slug: 'custom-features', name: 'Custom features', price: 'From KSh 8,000' },
+	{ slug: 'mobile-app', name: 'Mobile app', price: 'From KSh 60,000' },
+] as const;
 ---
 <Layout title="Greenville | Web and Android development" description="Greenville builds websites, web platforms, and Android apps for ambitious organizations.">
 	<main>
-		<section class="hero"><div class="container"><div class="eyebrow">Websites · Web apps · Android</div><h1>Websites and apps for <em>real work.</em></h1><p class="hero-copy">Greenville builds digital products for businesses, schools, and teams that need a better way to reach people or run their day-to-day work.</p><div class="hero-actions"><a class="button button-primary" href="/contact/">Start a project <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/work/">View our work</a></div></div></section>
+		<section class="hero"><div class="container"><div class="eyebrow">Websites · Web apps · Android</div><h1>Websites and apps for <em>real work.</em></h1><p class="hero-copy">Greenville builds digital products for businesses, schools, and teams that need a better way to reach people or run their day-to-day work.</p><div class="hero-actions"><a class="button button-primary" href="/contact/">Get a quote <span aria-hidden="true">↗</span></a><a class="button button-outline" href="/work/">View our work</a></div></div></section>
 		<section><div class="container intro-grid"><div><div class="eyebrow">What we are here to do</div><h2>Make the next task easier.</h2></div><div><p>We design and build websites, web applications, and Android apps around the people who use them. That could be a customer finding your service, a teacher sharing resources, or a team keeping track of work.</p><p>We keep the process close and the communication plain, from the first sketch to the first release.</p></div></div></section>
 		<section class="soft-section"><div class="container"><div class="section-head"><div><div class="eyebrow">What we make</div><h2>Technology with<br />a job to do.</h2></div><p>From first sketch to long-term support, we bring the right mix of product thinking and engineering.</p></div><div class="service-grid"><article class="service"><span class="service-number">01</span><h3>Websites & platforms</h3><p>Fast, focused websites and custom systems that help your organization communicate and operate better.</p><div class="tags"><span class="tag">Astro</span><span class="tag">Web apps</span></div></article><article class="service"><span class="service-number">02</span><h3>Android apps</h3><p>Useful mobile products for customers, field teams, and communities, built for the devices people actually use.</p><div class="tags"><span class="tag">Android</span><span class="tag">APIs</span></div></article><article class="service"><span class="service-number">03</span><h3>Product design</h3><p>Clear user flows, thoughtful interfaces, and prototypes that make the right product easier to build.</p><div class="tags"><span class="tag">UX strategy</span><span class="tag">UI design</span></div></article><article class="service"><span class="service-number">04</span><h3>Support & growth</h3><p>Ongoing improvements, hosting guidance, and technical care after launch. Good products keep getting better.</p><div class="tags"><span class="tag">Maintenance</span><span class="tag">Training</span></div></article></div></div></section>
+		<section id="packages" class="pricing-section" aria-labelledby="packages-heading"><div class="container"><div class="section-head"><div><div class="eyebrow">Website packages</div><h2 id="packages-heading">A clear place<br />to start.</h2></div><p>Choose a package to get a starting estimate. We’ll confirm the right scope and timeline with you.</p></div><div class="pricing-grid">{websitePackages.map((pkg) => <article class:list={['package-card', { 'package-featured': 'popular' in pkg && pkg.popular }]}>{'popular' in pkg && pkg.popular && <span class="package-badge">Most popular</span>}<div class="eyebrow">Website package</div><h3>{pkg.name}</h3><p class="package-summary">{pkg.summary}</p><div class="package-price"><strong>{pkg.price}</strong><span>starting price</span></div><p class="package-delivery">Estimated delivery: {pkg.delivery}</p><ul>{pkg.features.map((feature) => <li>{feature}</li>)}</ul><a class="button button-dark" href={`/contact/?package=${pkg.slug}`}>Get a quote <span aria-hidden="true">↗</span></a></article>)}</div><div class="package-extras"><div><div class="eyebrow">Beyond the packages</div><h3>Additional services</h3></div><div class="package-extras-grid">{addOnServices.map((service) => <a class="package-extra" href={`/contact/?package=${service.slug}`}><strong>{service.name}</strong><span>{service.price}</span></a>)}</div></div><p class="pricing-note">Final scope, delivery dates, and any ongoing costs are confirmed in your quote.</p></div></section>
 		<section><div class="container"><div class="section-head"><div><div class="eyebrow">Work and directions</div><h2>Different problems.<br />Same care.</h2></div><p>These live projects show the kind of products Greenville can help plan and build.</p></div><div class="project-grid">{projects.map((project) => <a class="project-card" href={project.url} target="_blank" rel="noopener noreferrer"><img src={project.image} alt={project.title} /><div class="project-overlay"><div class="eyebrow">{project.sector}</div><h3>{project.title}</h3><p>{project.text}</p></div></a>)}</div></div></section>
 		<section class="stats"><div class="container stats-grid"><div class="stat"><strong>Juja</strong><span>Based in Kiambu County, Kenya</span></div><div class="stat"><strong>Web + Android</strong><span>One partner for the product and the platform behind it</span></div><div class="stat"><strong>Direct</strong><span>Work with the people making the decisions and the build</span></div></div></section>
-		<section class="cta-band"><div class="container cta-row"><h2>Have a problem worth solving?</h2><p>Bring us the rough version. A good first conversation does not need a perfect brief.</p><a class="button button-dark" href="/contact/">Talk to Greenville <span aria-hidden="true">↗</span></a></div></section>
+		<section id="quote" class="cta-band"><div class="container cta-row"><div><div class="eyebrow">Get a quote</div><h2>Have a project in mind?</h2></div><p>Tell us what you need, your target date, and any constraints. We’ll review the details and help scope the right solution.</p><a class="button button-dark" href="/contact/">Request a quote <span aria-hidden="true">↗</span></a></div></section>
 	</main>
 </Layout>

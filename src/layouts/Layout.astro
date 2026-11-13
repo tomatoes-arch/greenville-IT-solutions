@@ -28,9 +28,36 @@ const path = Astro.url.pathname;
 			.site-footer { padding:32px 0; background:#0b1d18; color:#b9c9c0; font-size:.8rem; } .footer-row { display:flex; align-items:center; justify-content:space-between; gap:25px; } .footer-brand { color:#fff; } .footer-links { display:flex; gap:22px; } .footer-links a:hover { color:var(--lime); }
 			@media (max-width:760px) { .container { width:min(100% - 36px,600px); } .nav { min-height:72px; } .nav-links,.nav-cta { display:none; } .menu-button { display:block; } .hero { min-height:620px; padding:130px 0 60px; } .hero:after { width:280px; height:280px; right:-145px; top:300px; } .hero h1 { font-size:clamp(3.1rem,16vw,5rem); } .hero-actions,.cta-row { align-items:flex-start; flex-direction:column; } main section { padding:76px 0; } .section-head,.intro-grid,.split-grid,.contact-layout { display:block; } .section-head > p { margin-top:20px; } .intro-grid h2 { margin-bottom:28px; } .service-grid { grid-template-columns:1fr 1fr; } .service + .service { padding-left:16px; } .service:nth-child(odd) { padding-left:0; } .project-grid { grid-template-columns:1fr; } .project-card:first-child,.project-card:first-child img { min-height:360px; } .project-card { min-height:270px; } .project-card img { min-height:270px; } .stats-grid { grid-template-columns:1fr; gap:25px; } .case,.contact-form { grid-template-columns:1fr; } .case:nth-child(even) .case-image { order:0; } .contact-layout > * + * { margin-top:45px; } .field-full { grid-column:auto; } .footer-row { align-items:flex-start; flex-direction:column; } .footer-links { flex-wrap:wrap; } }
 		</style>
+		<style is:global>
+			.pricing-section { background:#edf2eb; }
+			.pricing-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:stretch; }
+			.package-card { position:relative; display:flex; flex-direction:column; padding:30px; border:1px solid var(--line); background:#fff; }
+			.package-featured { border:2px solid var(--green); }
+			.package-badge { position:absolute; top:0; right:0; padding:8px 12px; background:var(--lime); color:var(--ink); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+			.package-card h3 { margin:16px 0 10px; font-size:1.55rem; }
+			.package-summary { min-height:48px; color:var(--muted); font-size:.88rem; line-height:1.6; }
+			.package-price { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; margin:18px 0 4px; }
+			.package-price strong { font-family:'Space Grotesk',sans-serif; font-size:1.85rem; letter-spacing:-.06em; }
+			.package-price span,.package-delivery { color:var(--muted); font-size:.75rem; }
+			.package-delivery { margin-bottom:18px; }
+			.package-card ul { display:grid; gap:10px; margin:0 0 28px; padding:18px 0 0; border-top:1px solid var(--line); list-style:none; }
+			.package-card li { color:#40564c; font-size:.82rem; line-height:1.4; }
+			.package-card li:before { content:'✓'; margin-right:9px; color:var(--green); font-weight:700; }
+			.package-card .button { align-self:flex-start; margin-top:auto; }
+			.package-extras { display:grid; grid-template-columns:.7fr 1.3fr; gap:35px; align-items:start; margin-top:56px; padding-top:35px; border-top:1px solid #c4d3c8; }
+			.package-extras h3 { margin:10px 0 0; font-size:1.6rem; }
+			.package-extras-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+			.package-extra { display:flex; flex-direction:column; gap:7px; padding:16px; border:1px solid #c4d3c8; background:rgba(255,255,255,.55); }
+			.package-extra strong { font-size:.84rem; }
+			.package-extra span { color:var(--muted); font-size:.78rem; }
+			.package-extra:hover { border-color:var(--green); }
+			.pricing-note { margin:24px 0 0; color:var(--muted); font-size:.78rem; }
+			@media (max-width:900px) { .pricing-grid { grid-template-columns:1fr 1fr; } .package-card:last-child { grid-column:1/-1; } .package-extras { grid-template-columns:1fr; gap:20px; } }
+			@media (max-width:760px) { .pricing-grid { grid-template-columns:1fr; } .package-card:last-child { grid-column:auto; } .package-summary { min-height:0; } .package-extras-grid { grid-template-columns:1fr; } }
+		</style>
 	</head>
 	<body>
-		<header class:list={['site-header', { 'site-header-light': path === '/contact/' }]}><div class="container nav"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Greenville</a><nav class="nav-links" aria-label="Primary navigation"><a class={path === '/' ? 'active' : ''} href="/">Home</a><a class={path === '/services/' ? 'active' : ''} href="/services/">Services</a><a class={path === '/work/' ? 'active' : ''} href="/work/">Work</a><a class={path === '/about/' ? 'active' : ''} href="/about/">About</a></nav><a class="nav-cta" href="/contact/">Start a project <span aria-hidden="true">↗</span></a><button class="menu-button" aria-label="Open navigation">☰</button></div></header>
+		<header class:list={['site-header', { 'site-header-light': path === '/contact/' }]}><div class="container nav"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Greenville</a><nav class="nav-links" aria-label="Primary navigation"><a class={path === '/' ? 'active' : ''} href="/">Home</a><a href="/#packages">Packages</a><a class={path === '/services/' ? 'active' : ''} href="/services/">Services</a><a class={path === '/work/' ? 'active' : ''} href="/work/">Work</a><a class={path === '/about/' ? 'active' : ''} href="/about/">About</a></nav><a class="nav-cta" href="/contact/">Get a quote <span aria-hidden="true">↗</span></a><button class="menu-button" aria-label="Open navigation">☰</button></div></header>
 		<slot />
 		<footer class="site-footer"><div class="container footer-row"><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Greenville</a><span>Digital products for growing organizations.</span><div class="footer-links"><a href="/services/">Services</a><a href="/work/">Work</a><a href="/contact/">Contact</a></div></div></footer>
 	</body>

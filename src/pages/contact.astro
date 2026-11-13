@@ -2,10 +2,32 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Contact | Greenville IT Solutions" description="Start a web, Android, or digital product project with Greenville.">
-	<main><section class="page-content"><div class="container contact-layout"><div><div class="eyebrow">Start a project</div><h1>Tell us what needs building.</h1><p class="lead">A few details are enough for a first conversation. Tell us what you need, who it is for, and where things currently get stuck.</p><div class="contact-detail"><strong>Email</strong><a href="mailto:hello@greenville.co.ke">hello@greenville.co.ke</a></div><div class="contact-detail"><strong>Based in</strong>Juja, Kiambu County, Kenya</div></div><div><form class="contact-form" id="contact-form"><div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required /></div><div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required /></div><div class="field"><label for="organization">Company or organization</label><input id="organization" name="organization" autocomplete="organization" /></div><div class="field"><label for="service">What do you need?</label><select id="service" name="service"><option value="">Choose a service</option><option>Website or web application</option><option>Android app</option><option>Product design</option><option>Support and improvement</option><option>Something else</option></select></div><div class="field field-full"><label for="message">Tell us about the project</label><textarea id="message" name="message" required></textarea></div><div class="field field-full"><button class="button button-dark" type="submit">Send project enquiry <span aria-hidden="true">↗</span></button></div></form><p class="form-note" id="form-note" role="status">Thanks. Your message has been noted. We will be in touch at the email you provided.</p></div></div></section></main>
+	<main><section class="page-content"><div class="container contact-layout"><div><div class="eyebrow">Get a quote</div><h1>Tell us what you need.</h1><p class="lead">Share a few details about your project, the package you have in mind, and where things currently get stuck.</p><div class="contact-detail"><strong>Email</strong><a href="mailto:hello@greenville.co.ke">hello@greenville.co.ke</a></div><div class="contact-detail"><strong>Based in</strong>Juja, Kiambu County, Kenya</div></div><div><form class="contact-form" id="contact-form"><div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required /></div><div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required /></div><div class="field"><label for="organization">Company or organization</label><input id="organization" name="organization" autocomplete="organization" /></div><div class="field"><label for="service">What do you need?</label><select id="service" name="service"><option value="">Choose a service</option><option>Website or web application</option><option>Android app</option><option>Product design</option><option>Support and improvement</option><option>Something else</option></select></div><div class="field field-full"><label for="package">Package or service of interest</label><select id="package" name="package"><option value="">Not sure yet</option><option value="basic-website">Basic Website</option><option value="business-website">Business Website</option><option value="ecommerce-platform">E-commerce Platform</option><option value="website-maintenance">Website maintenance</option><option value="domain-hosting">Domain & hosting setup</option><option value="custom-features">Custom features</option><option value="mobile-app">Mobile app</option></select></div><div class="field field-full"><label for="message">Tell us about the project</label><textarea id="message" name="message" required></textarea></div><div class="field field-full"><button class="button button-dark" type="submit">Prepare email enquiry <span aria-hidden="true">↗</span></button></div></form><p class="form-note" id="form-note" role="status">Your email app should open with the enquiry details. Review them and send the email to complete your request.</p></div></div></section></main>
 	<script>
-		const form = document.querySelector('#contact-form');
-		const note = document.querySelector('#form-note');
-		form?.addEventListener('submit', (event) => { event.preventDefault(); form.setAttribute('hidden', ''); note?.classList.add('visible'); });
+		const form = document.querySelector<HTMLFormElement>('#contact-form');
+		const note = document.querySelector<HTMLParagraphElement>('#form-note');
+		const packageField = document.querySelector<HTMLSelectElement>('#package');
+		const selectedPackage = new URLSearchParams(window.location.search).get('package');
+		if (packageField && selectedPackage && Array.from(packageField.options).some((option) => option.value === selectedPackage)) {
+			packageField.value = selectedPackage;
+		}
+
+		form?.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const formData = new FormData(form);
+			const body = [
+				`Name: ${formData.get('name')}`,
+				`Email: ${formData.get('email')}`,
+				`Company or organization: ${formData.get('organization') || 'Not provided'}`,
+				`Service: ${formData.get('service') || 'Not selected'}`,
+				`Package or service: ${formData.get('package') || 'Not selected'}`,
+				'',
+				'Project details:',
+				formData.get('message') ?? '',
+			].join('\n');
+			const subject = `Project enquiry from ${formData.get('name')}`;
+			window.location.href = `mailto:hello@greenville.co.ke?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+			note?.classList.add('visible');
+		});
 	</script>
 </Layout>
