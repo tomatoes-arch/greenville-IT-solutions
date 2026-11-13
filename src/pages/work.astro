@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/projects';
+---
+<Layout title="Work | Greenville IT Solutions" description="Selected web, Android, and digital product work from Greenville.">
+	<main><section class="hero"><div class="container"><div class="eyebrow">Work and directions</div><h1>A few projects we are <em>proud to share.</em></h1><p class="hero-copy">These live websites show how Greenville turns a clear purpose into a useful digital experience.</p></div></section><section class="page-content"><div class="container"><div class="case-list">{projects.map((item) => <article class="case"><div class="case-image"><a href={item.url} target="_blank" rel="noopener noreferrer"><img src={item.image} alt={item.title} /></a></div><div><div class="eyebrow">{item.sector}</div><h2>{item.title}</h2><p>{item.text}</p><div class="case-meta">{item.tags.map((tag) => <span class="tag">{tag}</span>)}</div><a class="button button-dark" href={item.url} target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a></div></article>)}</div></div></section><section class="cta-band"><div class="container cta-row"><h2>Have a problem like these?</h2><p>Tell us what you are building and where the current process gets stuck.</p><a class="button button-dark" href="/contact/">Start a conversation <span aria-hidden="true">↗</span></a></div></section></main>
+</Layout>

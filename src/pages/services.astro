@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+const services = [
+	['01', 'Friends in the Children Ministry', 'Bible lessons, teaching tools, and free resources for Sunday school teachers.', 'https://friends-in-the-children-ministry.vercel.app'],
+	['02', 'Pandamart', 'A Kenyan retail destination for furniture, electronics, homeware, and lifestyle products.', 'https://pandamart.vercel.app'],
+];
+---
+<Layout title="Services | Greenville IT Solutions" description="Web development, Android app development, product design, and support from Greenville.">
+	<main><section class="hero"><div class="container"><div class="eyebrow">What we do</div><h1>Pick the part that is <em>holding you back.</em></h1><p class="hero-copy">You may need a new website, an Android app, or help turning a rough idea into something people can actually use. We can start there.</p></div></section><section class="page-content"><div class="container"><div class="section-head"><div><div class="eyebrow">Services</div><h2>Work that has a<br />clear purpose.</h2></div><p>Visit these projects to see what they are about.</p></div><div class="service-grid">{services.map(([number, title, description, url]) => <a class="service" href={url} target="_blank" rel="noopener noreferrer"><span class="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span class="tag">Visit website <span aria-hidden="true">↗</span></span></a>)}</div></div></section><section class="soft-section"><div class="container split-grid"><div><div class="eyebrow">Working together</div><h2>You will know what is happening at each stage.</h2></div><div class="copy"><p>We agree on the problem first, then work through the screens, the technical decisions, and the first release together.</p><p>You get regular progress to review, not a surprise at the end.</p><a class="button button-dark" href="/contact/">Talk through your project <span aria-hidden="true">↗</span></a></div></div></section></main>
+</Layout>
